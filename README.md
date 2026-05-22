@@ -88,11 +88,20 @@ echo "=== 5. Workflows ===" && ls .github/workflows/
 ### 3. Terraform apply: two AWS Secrets Manager secrets created (database-credentials and api-keys)
 ![Terraform apply - Secrets Manager resources](screenshots/03-terraform-apply-secrets-manager-resources.png)
 
-### 4. Secret rotation age check: database-credentials is 0 days old, within the 90-day window
+### 4. GitHub Actions — `aws-secrets.yml` workflow: both `retrieve-secret` and `check-rotation` jobs passing
+![GitHub Actions aws-secrets workflow success](screenshots/07-github-actions-aws-secrets-workflow-success.png)
+
+### 4a. `retrieve-secret` job: database password retrieved from AWS Secrets Manager and masked as `***` in the log
+![retrieve-secret job - password masked](screenshots/08-aws-secrets-retrieve-secret-job-password-masked.png)
+
+### 4b. `check-rotation` job: both `database-credentials` and `api-keys` pass the 90-day rotation check
+![check-rotation job - both secrets passing](screenshots/09-aws-secrets-check-rotation-job-both-secrets-passing.png)
+
+### 5. Secret rotation age check: database-credentials is 0 days old, within the 90-day window
 ![Secret rotation age check passing](screenshots/04-secret-rotation-age-check-passing.png)
 
-### 5. Pre-commit hook: commit blocked after detecting a fake AWS access key in `test-secret.txt`
+### 6. Pre-commit hook: commit blocked after detecting a fake AWS access key in `test-secret.txt`
 ![Pre-commit hook blocking fake AWS key](screenshots/05-precommit-hook-blocking-fake-aws-key.png)
 
-### 6. End-to-end verification: all five checks passing (secrets, Terraform, rotation, hook, workflows)
+### 7. End-to-end verification: all five checks passing (secrets, Terraform, rotation, hook, workflows)
 ![End-to-end verification](screenshots/06-end-to-end-verification-all-checks.png)
